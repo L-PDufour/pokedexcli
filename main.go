@@ -6,14 +6,9 @@ import (
 	"github.com/l-pdufour/pokedexcli/internal/pokeapi"
 )
 
-type Pokemon struct {
-	Name string // Assuming there's a Name field in your Pokemon struct
-	// Add other fields as needed
-}
+var caughtPokemonMap = make(map[string]pokeapi.PokemonResp)
 
-var caughtPokemonMap = make(map[string]Pokemon)
-
-func storeInMap(name string, pokemon Pokemon) {
+func storeInMap(name string, pokemon pokeapi.PokemonResp) {
 	caughtPokemonMap[name] = pokemon
 }
 

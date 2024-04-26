@@ -8,16 +8,15 @@ import (
 )
 
 func commandCatch(c *config, name ...string) error {
-	rand.Seed(time.Now().UnixNano()) // Seed the random number generator
-
+	source := rand.NewSource(time.Now().UnixNano())
+	rng := rand.New(source)
 	if len(name) == 0 || name[0] == "" {
 		fmt.Println("Need a pokemon name")
 		return nil
 	}
 
-	// Simulate a random chance of catching the Pokemon
-	chance := rand.Float64() // Generate a random float between 0 and 1
-	if chance < 0.5 {        // Adjust the threshold to change the catch rate
+	chance := rng.Float64()
+	if chance < 0.5 {
 		fmt.Println("Failed to catch", name[0])
 		return nil
 	}
@@ -29,8 +28,7 @@ func commandCatch(c *config, name ...string) error {
 	}
 
 	fmt.Println("Caught", resp.Name)
-	pokemon := Pokemon{Name: resp.Name}
-	storeInMap(resp.Name, pokemon) // Call a function to store the caught Pokemon in a map
+	storeInMap(resp.Name, resp) // Call a function to store the caught Pokemon in a map
 
 	return nil
 }
